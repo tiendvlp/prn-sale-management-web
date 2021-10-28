@@ -7,9 +7,40 @@
   <ItemGroup>
     <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
     <None Remove="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" />
+    <None Remove="Microsoft.AspNet.WebPages" />
+    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration" />
+    <None Remove="Areas\" />
+    <None Remove="Areas\Admin\" />
+    <None Remove="Areas\Admin\Controllers\" />
+    <None Remove="Areas\Admin\Views\" />
+    <None Remove="Areas\Member\" />
+    <None Remove="Areas\Member\Controllers\" />
+    <None Remove="Areas\Member\ViewModels\" />
+    <None Remove="Areas\Admin\ViewModels\" />
+    <None Remove="Areas\Member\Views\" />
+    <None Remove="Controllers\" />
+    <None Remove="Views\Home\" />
+    <None Remove="Areas\Admin\Views\Home\" />
+    <None Remove="Areas\Member\Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.11" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration" Version="5.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\" />
+    <Folder Include="Areas\Admin\" />
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Views\" />
+    <Folder Include="Areas\Member\" />
+    <Folder Include="Areas\Member\Controllers\" />
+    <Folder Include="Areas\Member\ViewModels\" />
+    <Folder Include="Areas\Admin\ViewModels\" />
+    <Folder Include="Areas\Member\Views\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Views\Login\" />
+    <Folder Include="Areas\Admin\Views\Home\" />
+    <Folder Include="Areas\Member\Views\Home\" />
   </ItemGroup>
 </Project>
