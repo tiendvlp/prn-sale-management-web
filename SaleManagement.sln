@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessObject", "BusinessObject\BusinessObject.csproj", "{C3995BFB-36BD-40B2-84C6-380B255D8BD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop", "Desktop\Desktop.csproj", "{707DE401-3083-4AFF-BE3B-219F52911844}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estore", "Estore\Estore.csproj", "{082D6E43-90B7-47CB-ABA7-F140C254ED63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +27,10 @@ Global
 		{707DE401-3083-4AFF-BE3B-219F52911844}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{707DE401-3083-4AFF-BE3B-219F52911844}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{707DE401-3083-4AFF-BE3B-219F52911844}.Release|Any CPU.Build.0 = Release|Any CPU
+		{082D6E43-90B7-47CB-ABA7-F140C254ED63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{082D6E43-90B7-47CB-ABA7-F140C254ED63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{082D6E43-90B7-47CB-ABA7-F140C254ED63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{082D6E43-90B7-47CB-ABA7-F140C254ED63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
