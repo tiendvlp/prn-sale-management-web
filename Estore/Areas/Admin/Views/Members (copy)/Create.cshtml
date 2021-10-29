@@ -1,0 +1,41 @@
+﻿@model CreateMemberViewModel
+@{
+    ViewBag.Title = "Create Member";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <h1>@ViewBag.Title</h1>
+    <div class="col-md-12" style="height:60px"></div>
+    <div class="row offset-md-3">
+        <div class="col-md-6">
+            <section>
+                <section>
+                    @using (Html.BeginForm("Create", "Members", FormMethod.Post))
+                    {
+                        @Html.EditorFor(expression: (x => x.Member), templateName: "_MemberEditorTemplate")
+                        <div style="height:40px">
+                            @if (Model != null && Model.ErrorMessage != null)
+                            {
+                                <span class="text-danger"> @Model.ErrorMessage </span>
+                            }
+                        </div>
+
+                        <div class="offset-md-5 form-group">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    }
+                </section>
+
+            </section>
+        </div>
+    </div>
+</body>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+</html>

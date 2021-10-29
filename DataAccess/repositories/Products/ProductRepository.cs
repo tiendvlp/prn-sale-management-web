@@ -30,14 +30,14 @@ namespace DataAccess.repositories.Products
 
         public IEnumerable<Product> GetAll()
         {
-            IEnumerable<Product> result =  _productDao.GetAll().ToList();
+            IEnumerable<Product> result = _productDao.GetAll().ToList().OrderBy(m => m.Name);
 
             return result;
         }
 
         public Product GetById(string id)
         {
-            return _productDao.Get(id); 
+            return _productDao.Get(id);
         }
 
         public IEnumerable<Product> GetWIthFilter(string id, string name, int unitMax, int unitMin, double priceMax, double priceMin)
