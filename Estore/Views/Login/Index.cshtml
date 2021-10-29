@@ -4,10 +4,10 @@
 
 <h1>This is the login page</h1>
 
-<a href='@Url.Action("Home", "Index", new { area = "Member" })'>
+<a asp-area="Member" asp-controller="Home" asp-action="Index">
     Click here to go to member page
 </a>
 <br />
-<a href='@Url.Action("Home", "Index", new { area = "Admin" })'>
+<a asp-area="Admin" asp-controller="Home" asp-action="Index">
     Click here to go to admin page
 </a>

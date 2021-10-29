@@ -48,14 +48,8 @@ namespace Estore
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "/{controller=Login}/{action=Index}/{id?}");
-                endpoints.MapControllerRoute(
-                    name: "admin",
-                    pattern: "/{area=Admin}/{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapControllerRoute(
-                   name: "member",
-                   pattern: "/{area=Member}/{controller=Home}/{action=Index}/{id?}");
+                   name: "default",
+                   pattern: "{area=Member}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }
