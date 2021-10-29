@@ -1,0 +1,27 @@
+﻿@model UpdateMemberViewModel
+@{
+    ViewBag.Title = "Update Member";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <h1>@ViewBag.Title</h1>
+    <div class="row offset-md-3">
+        <div class="col-md-12" style="height: 200px"></div>
+        <div class="col-md-6">
+            <section>
+                <form id="member-update" method="post">
+                    @await Html.PartialAsync("_MemberInfoPartial", Model.Member)
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

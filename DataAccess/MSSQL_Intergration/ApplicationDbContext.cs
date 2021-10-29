@@ -21,7 +21,7 @@ namespace DataAccess.Data
         {
             optionsBuilder.UseLazyLoadingProxies();
             optionsBuilder.ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.DetachedLazyLoadingWarning));
-            optionsBuilder.UseSqlServer(@"server=localhost,1533;Database=PRN_DB;User=SA;Password=Password123;Trusted_Connection=False;MultipleActiveResultSets=True");
+            optionsBuilder.UseSqlServer(@"server=192.168.1.7,1533;Database=PRN_DB;User=SA;Password=Password123;Trusted_Connection=False;MultipleActiveResultSets=True");
         }
     }
 }
