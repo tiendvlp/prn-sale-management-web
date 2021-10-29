@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.UnitOfWork
 {
-    public class UnitOfWorkFactory
+    public class IUnitOfWorkFactory
     {
         public UnitOfWork UnitOfWork { get { return new UnitOfWork(new Data.ApplicationDbContext()); } }
     }
