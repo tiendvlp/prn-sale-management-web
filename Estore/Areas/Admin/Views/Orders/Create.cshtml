@@ -72,21 +72,33 @@
     </div>
 </body>
 @section Scripts {
-    <script>typeoffunction getFormData($form) {
-            var unindexed_array = $form.serializeArray();
-            var indexed_array = {};
+    <script>
+        let errorMessage = "@Html.Raw(Model.ErrorMessage)";
+        let isSuccess = ("@Html.Raw(Model.IsSuccess)" === "True");
 
-            $.map(unindexed_array, function (n, i) {
-                indexed_array[n['name']] = n['value'];
+        if (errorMessage) {
+            swal({
+                title: "Notification",
+                text: errorMessage,
+                icon: "error",
+                buttons: true,
+                dangerMode: true
+            }).then((isOK) => {
+
             });
+        } else if (isSuccess) {
+            swal({
+                title: "Notification",
+                text: "Congrate !!! your order has been saved",
+                icon: "success",
+                buttons: true,
+                dangerMode: false
+            }).then((isOK) => {
 
-            return indexed_array;
+            });
         }
-        function onF() {
-            var $form = $("#FormF");
-            var data = getFormData($form);
-            console.log(JSON.stringify(data));
-        }</script>
+
+    </script>
     <partial name="_ValidationScriptsPartial" />
 }
 </html>

@@ -61,39 +61,26 @@ namespace Estore.Areas.Admin.Controllers
 
                 if (member == null)
                 {
-                    return Json(new
-                    {
-                        message = "Your member email does not exist",
-                        success = false
-                    });
+                    createOrderViewModel.ErrorMessage = "Your Member email does not exist";
+                    return View(createOrderViewModel);
                 }
 
                 if (orderViewModel.OrderDate > orderViewModel.RequiredDate)
                 {
-                    return Json(new
-                    {
-                        message = "Your required date have to be greater than order date",
-                        success = false
-                    });
+                    createOrderViewModel.ErrorMessage = "Your required date have to be greater than order date";
+                    return View(createOrderViewModel);
                 }
 
                 if (orderViewModel.OrderDate > orderViewModel.ShippedDate)
                 {
-                    return Json(new
-                    {
-                        message = "Your shipped date have to be greater than order date",
-                        success = false
-                    });
+                    createOrderViewModel.ErrorMessage = "Your shipped date have to be greater than order date";
+                    return View(createOrderViewModel);
                 }
 
                 if (createOrderViewModel.OrderDetails == null || createOrderViewModel.OrderDetails.ToList().Count == 0)
                 {
-                    return Json(new
-                    {
-                        message = "Your order details is empty",
-                        shouldCancel = true,
-                        success = false
-                    });
+                    createOrderViewModel.ErrorMessage = "Your order details is empty";
+                    return View(createOrderViewModel);
                 }
 
                 BusinessObject.Order createdOrder = work.OrderRepository.Add(member.Id,
@@ -108,11 +95,8 @@ namespace Estore.Areas.Admin.Controllers
 
                 work.Save();
 
-                return Json(new
-                {
-                    message = "Congrat !!! Your order has been saved",
-                    success = true
-                });
+                createOrderViewModel.IsSuccess = true;
+                return View(createOrderViewModel);
             }
         }
         #endregion

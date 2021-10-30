@@ -8,13 +8,15 @@ namespace Estore.Areas.Admin.ViewModels.Order
     {
         public List<OrderDetailViewModel> OrderDetails { get; set; }
         public OrderViewModel Order { get; set; }
+        public string ErrorMessage { get; set; }
+        public bool IsSuccess { get; set; }
 
         public CreateOrderViewModel(OrderViewModel order)
         {
+            IsSuccess = false;
             Order = order;
         }
 
-        public string ErrorMessage { get; set; }
 
         public CreateOrderViewModel(List<OrderDetailViewModel> orderDetails, OrderViewModel order)
         {

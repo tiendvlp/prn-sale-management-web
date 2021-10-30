@@ -6,7 +6,6 @@ namespace Estore.Areas.Admin.ViewModels.Order
     public class OrderDetailViewModel
     {
         public string ProductId { get; set; }
-        [Required]
         public string ProductName { get; set; }
         public int Quantity { get; set; }
         public Double ProductPrice { get; set; }
