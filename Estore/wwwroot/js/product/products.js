@@ -5,24 +5,36 @@ $(document).ready(function () {
 });
 
 function loadTable() {
-    dataTable = $("#tblData").DataTable({
-        "ajax": {
-            "type": "GET",
-            "url": "/Admin/Products/GetAll"
-        },
-        "columns": [
-            { "data": "id", "width": "10%" },
-            { "data": "name", "width": "20%" },
-            { "data": "categoryName", "width": "10%" },
-            { "data": "price", "width": "11%" },
-            { "data": "quantity", "width": "10%" },
-            { "data": "weight", "width": "10%" },
-            { "data": "unit", "width": "10%" },
-            {
-                "data": "id",
-                "render": function (data) {
-                    console.log("Delete product with id: " + data)
-                    return `
+    let data = {};
+    if (filter != null) {
+        data = filter;
+    }
+
+    console.log(JSON.stringify(data))
+    $.ajax({
+        type: "POST",
+        url: "/Admin/Products/GetAll",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: function (data) {
+            if (data.success) {
+                dataTable = $("#tblData").DataTable({
+                    "bDestroy": true,
+                    "searching": false,
+                    data: data.data,
+                    "columns": [
+                        { "data": "id", "width": "10%" },
+                        { "data": "name", "width": "20%" },
+                        { "data": "categoryName", "width": "10%" },
+                        { "data": "price", "width": "11%" },
+                        { "data": "quantity", "width": "10%" },
+                        { "data": "weight", "width": "10%" },
+                        { "data": "unit", "width": "10%" },
+                        {
+                            "data": "id",
+                            "render": function (data) {
+                                console.log("Delete product with id: " + data)
+                                return `
                         <div class="text-center">
                             <a href="/Admin/Products/Update/${data}" class="btn btn-success" style="cursor:pointer;">
                                 Update
@@ -33,11 +45,20 @@ function loadTable() {
                             </a>
                         </div>
                     `;
-                },
-                "width": "20%"
+                            },
+                            "width": "20%"
+                        }
+                    ],
+                });
+                console.log(JSON.stringify(data.data))
             }
-        ],
+            else {
+                console.log(JSON.stringify(data.data))
+            }
+        }
     });
+
+
 }
 
 function Delete(url) {
@@ -54,7 +75,8 @@ function Delete(url) {
             success: function (data) {
                 if (data.success) {
                     toastr.success(data.message);
-                    $('#tblData').dataTable().api().ajax.reload();
+                    $("#tblData").dataTable().fnDestroy();
+                    loadTable();
                 }
                 else {
                     toastr.error(data.message);

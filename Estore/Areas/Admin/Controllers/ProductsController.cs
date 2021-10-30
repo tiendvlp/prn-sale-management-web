@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using DataAccess.UnitOfWork;
 using Estore.Areas.Admin.ViewModels;
@@ -18,9 +19,13 @@ namespace Estore.Areas.Admin.Controllers
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(ManageProductsViewModel model)
         {
-            return View();
+            if (model == null)
+            {
+                model = new ManageProductsViewModel();
+            }
+            return View(model);
         }
 
         [HttpGet]
@@ -168,12 +173,28 @@ namespace Estore.Areas.Admin.Controllers
             }
         }
 
-        public IActionResult GetAll()
+        [HttpPost()]
+        public IActionResult GetAll([FromBody()] ProductFilterViewModel model)
         {
-            Console.WriteLine("Get all product 2");
+            Console.WriteLine("Getall product action");
+
+            if (model != null)
+            {
+                Console.WriteLine("Product name: " + model.ProductName);
+            }
+
             using (var work = _unitOfWorkFactory.UnitOfWork)
             {
-                var queryResult = work.ProductRepository.GetAll();
+                IEnumerable<BusinessObject.Product> queryResult;
+                if (model == null)
+                {
+                    queryResult = work.ProductRepository.GetAll();
+                    Console.WriteLine("Filter is null");
+                }
+                else
+                {
+                    queryResult = work.ProductRepository.GetWIthFilter(model.ProductId, model.ProductName, model.MaxQuantity, model.MinQuantity, model.MaxPrice, model.MinPrice);
+                }
 
                 List<dynamic> results = new List<dynamic>();
                 foreach (var product in queryResult)
@@ -192,8 +213,9 @@ namespace Estore.Areas.Admin.Controllers
                     results.Add(data);
                 }
 
-                return Json(new { data = results });
+                return Json(new { success = true, data = results });
             }
+
         }
         #endregion
     }

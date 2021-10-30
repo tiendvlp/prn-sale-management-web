@@ -6,6 +6,7 @@ using DataAccess.UnitOfWork;
 using Desktop.common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +25,13 @@ namespace Estore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(config =>
+            {
+                // Add XML Content Negotiation
+                config.RespectBrowserAcceptHeader = true;
+                config.ReturnHttpNotAcceptable = true;
+                config.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+            });
             services.AddSingleton
                    (Configuration.Get<AppSetting>());
             services.AddSingleton<IUnitOfWorkFactory>();

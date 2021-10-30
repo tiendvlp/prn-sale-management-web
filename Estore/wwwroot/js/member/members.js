@@ -6,6 +6,7 @@ $(document).ready(function () {
 
 function loadTable() {
     dataTable = $("#tblData").DataTable({
+        "searching": false,
         "ajax": {
             "type": "GET",
             "url": "/Admin/Members/GetAll"
