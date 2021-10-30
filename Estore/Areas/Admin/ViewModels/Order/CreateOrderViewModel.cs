@@ -6,7 +6,7 @@ namespace Estore.Areas.Admin.ViewModels.Order
 {
     public class CreateOrderViewModel
     {
-        public IEnumerable<OrderDetailViewModel> OrderDetails { get; set; }
+        public List<OrderDetailViewModel> OrderDetails { get; set; }
         public OrderViewModel Order { get; set; }
 
         public CreateOrderViewModel(OrderViewModel order)
@@ -16,9 +16,10 @@ namespace Estore.Areas.Admin.ViewModels.Order
 
         public string ErrorMessage { get; set; }
 
-        public CreateOrderViewModel(IEnumerable<OrderDetailViewModel> orderDetails)
+        public CreateOrderViewModel(List<OrderDetailViewModel> orderDetails, OrderViewModel order)
         {
             OrderDetails = orderDetails;
+            Order = order;
         }
 
         public CreateOrderViewModel()

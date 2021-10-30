@@ -14,12 +14,12 @@ namespace Estore.Areas.Admin.ViewModels.Order
         [Required]
         public DateTime ShippedDate { get; set; }
         [Required]
-        [Range(0, Double.MaxValue, ErrorMessage = "The frieght have to greater than value {0}")]
         public Double Freight { get; set; }
 
 
         public OrderViewModel()
         {
+
         }
 
         public OrderViewModel(string memberEmail, DateTime orderDate, DateTime requiredDate, DateTime shippedDate, double freight)
@@ -29,6 +29,14 @@ namespace Estore.Areas.Admin.ViewModels.Order
             RequiredDate = requiredDate;
             ShippedDate = shippedDate;
             Freight = freight;
+        }
+
+        public OrderViewModel(DateTime orderDate, DateTime requiredDate, DateTime shippedDate, Double freight)
+        {
+            Freight = freight;
+            OrderDate = orderDate;
+            RequiredDate = requiredDate;
+            ShippedDate = shippedDate;
         }
     }
 }

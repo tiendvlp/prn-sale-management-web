@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DataAccess.UnitOfWork;
 using Estore.Areas.Admin.ViewModels.Order;
 using Estore.Areas.Admin.ViewModels.Product;
@@ -28,15 +29,24 @@ namespace Estore.Areas.Admin.Controllers
             using (var work = _unitOfWorkFactory.UnitOfWork)
             {
                 List<OrderDetailViewModel> orderDetailViewModels = new List<OrderDetailViewModel>();
+                double freight = 0;
                 foreach (var id in productIds)
                 {
+                    Console.WriteLine("Add order detail");
                     var product = work.ProductRepository.GetById(id);
 
-                    orderDetailViewModels.Add(new OrderDetailViewModel(product.Id, product.Name, (int)product.Quantity, product.Price));
+                    orderDetailViewModels.Add(new OrderDetailViewModel(product.Id, product.Name, 1, product.Price));
+                    freight += product.Weight * 0.5;
                 }
 
-                CreateOrderViewModel viewModel = new CreateOrderViewModel(orderDetailViewModels);
-                return View();
+                DateTime orderDate = DateTime.Now;
+                DateTime shippedDate = orderDate.AddDays(3);
+                DateTime requiredDate = shippedDate;
+
+                OrderViewModel orderViewModel = new OrderViewModel(orderDate, shippedDate, requiredDate, freight);
+
+                CreateOrderViewModel viewModel = new CreateOrderViewModel(orderDetailViewModels, orderViewModel);
+                return View(viewModel);
             }
         }
 
@@ -76,6 +86,16 @@ namespace Estore.Areas.Admin.Controllers
                     });
                 }
 
+                if (createOrderViewModel.OrderDetails == null || createOrderViewModel.OrderDetails.ToList().Count == 0)
+                {
+                    return Json(new
+                    {
+                        message = "Your order details is empty",
+                        shouldCancel = true,
+                        success = false
+                    });
+                }
+
                 BusinessObject.Order createdOrder = work.OrderRepository.Add(member.Id,
                                                                              orderViewModel.OrderDate,
                                                                              orderViewModel.RequiredDate,
@@ -86,13 +106,14 @@ namespace Estore.Areas.Admin.Controllers
                     work.OrderDetailRepository.Add(createdOrder.Id, detailViewModel.ProductId, detailViewModel.ProductPrice, detailViewModel.Quantity, 1);
                 }
 
-            }
+                work.Save();
 
-            return Json(new
-            {
-                message = "Your order has been created successfully !!",
-                success = true
-            });
+                return Json(new
+                {
+                    message = "Congrat !!! Your order has been saved",
+                    success = true
+                });
+            }
         }
         #endregion
     }
