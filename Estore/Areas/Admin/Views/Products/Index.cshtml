@@ -7,12 +7,12 @@
     <div class="col-6">
         <h2 class="text-primary">Products</h2>
     </div>
-    <div class="col-6 text-right ">
-        <a asp-area="Admin" asp-controller="Products" asp-action="Create" class="btn btn-primary text-white">Create New Product</a>
-    </div>
+
 </div>
 
-<form id="filter-form">
+
+@using (Html.BeginForm("Index", "Products", FormMethod.Post))
+{
     <div class="col-12" style="height: 25px"></div>
     <div class="row">
         <div class="col-6">
@@ -25,49 +25,20 @@
 
         </div>
     </div>
-    <div class="form-row">
-        <div class="col form-group">
-            <label asp-for="Filter.ProductId"></label>
-            <input runat="server" id="filter-product-id" asp-for="Filter.ProductId" class="form-control" />
-        </div>
-        <div class="col form-group">
-            <label asp-for="Filter.ProductName"></label>
-            <input runat="server" asp-for="Filter.ProductName" class="form-control" />
-        </div>
-    </div>
+    @Html.EditorFor(expression: (x => x.Filter), templateName: "_ProductFilterEditorTemplate")
 
-    <div class="form-row">
-        <div class="col form-group">
-            @Html.CheckBoxFor(m => m.Filter.IsIncludePrice)
-            <label class="text-primary"><b>Price</b></label> <br />
-        </div>
-        <div class="col form-group">
-            @Html.CheckBoxFor(m => m.Filter.IsIncludeQuantity)
-            <label class="text-primary"><b>Unit in stock</b></label> <br />
-        </div>
-    </div>
-
-    <div class="form-row">
-        <div class="col form-group">
-            <label asp-for="Filter.MinPrice">From: </label>
-            <input id="filter-min-price" asp-for="Filter.MinPrice" type="number" step="0.01" class="form-control" />
-        </div>
-        <div class="col form-group">
-            <label asp-for="Filter.MaxPrice">To: </label>
-            <input id="filter-max-price" asp-for="Filter.MaxPrice" type="number" step="0.01" class="form-control" />
-        </div>
-        <div class="col form-group">
-            <label asp-for="Filter.MinQuantity">From: </label>
-            <input asp-for="Filter.MinQuantity" type="number" class="form-control" />
-        </div>
-        <div class="col form-group">
-            <label asp-for="Filter.MaxQuantity">To: </label>
-            <input asp-for="Filter.MaxQuantity" type="number" class="form-control" />
-        </div>
-    </div>
-</form>
+}
 
 <div class="col-12" style="height: 25px"></div>
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-primary">Products</h2>
+    </div>
+    <div class="col-6 .row">
+        <a onclick="onBtncreateOrderClicked()" class="float-right btn btn-primary text-white">Create Order</a>
+        <a asp-area="Admin" asp-controller="Products" asp-action="Create" class="float-right btn btn-danger text-white" style="margin-right:20px">Create product</a>
+    </div>
+</div>
 <br />
 <div class="p-4 border rounded">
     <table class="table table-striped table-bordered" id="tblData" style="width:100%">
@@ -81,12 +52,27 @@
                 <th>Weight</th>
                 <th>Unit</th>
                 <th><a asp-area="Admin" asp-controller="Product"></a></th>
+                <th></th>
             </tr>
         </thead>
     </table>
 </div>
 
+<form id="checkid" method="get" action="Orders/Create">
+</form>
+
 @section Scripts{
+    <script>function onBtncreateOrderClicked() {
+            let checkedProduct = $('.checkbox-product:checkbox:checked')
+            let isSubmit = false;
+            for (let i = 0; i < checkedProduct.length; i++) {
+                isSubmit = true;
+                $('#checkid').append(`<input type ="hidden" name="productIds" value = "${checkedProduct[i].value}" />`)
+            }
+            if (isSubmit) {
+                $('#checkid').submit()
+            }
+        }</script>
     <script>
         let filter = @Json.Serialize(Model.Filter);
     </script>

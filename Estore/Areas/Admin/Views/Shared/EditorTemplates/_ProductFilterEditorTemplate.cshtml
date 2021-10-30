@@ -1,40 +1,43 @@
 ﻿@model ProductFilterViewModel
 
+
 <div class="form-row">
     <div class="col form-group">
         <label asp-for="ProductId"></label>
-        <input asp-for="ProductId" class="form-control" />
-        <span asp-validation-for="ProductId" class="text-danger"></span>
+        <input runat="server" id="filter-product-id" asp-for="ProductId" class="form-control" />
     </div>
     <div class="col form-group">
         <label asp-for="ProductName"></label>
-        <input asp-for="ProductId" class="form-control" />
-        <span asp-validation-for="ProductId" class="text-danger"></span>
+        <input runat="server" asp-for="ProductName" class="form-control" />
     </div>
 </div>
 
 <div class="form-row">
     <div class="col form-group">
-        <label asp-for="MinPrice"></label>
-        <input asp-for="MinPrice" type="number" class="form-control" />
-        <span asp-validation-for="MinPrice" class="text-danger"></span>
+        @Html.CheckBoxFor(m => m.IsIncludePrice)
+        <label class="text-primary"><b>Price</b></label> <br />
     </div>
     <div class="col form-group">
-        <label asp-for="MaxPrice"></label>
-        <input asp-for="MaxPrice" type="number" class="form-control" />
-        <span asp-validation-for="MaxPrice" class="text-danger"></span>
+        @Html.CheckBoxFor(m => m.IsIncludeQuantity)
+        <label class="text-primary"><b>Unit in stock</b></label> <br />
     </div>
 </div>
 
 <div class="form-row">
     <div class="col form-group">
-        <label asp-for="MinQuantity"></label>
+        <label asp-for="MinPrice">From: </label>
+        <input id="filter-min-price" asp-for="MinPrice" type="number" step="0.01" class="form-control" />
+    </div>
+    <div class="col form-group">
+        <label asp-for="MaxPrice">To: </label>
+        <input id="filter-max-price" asp-for="MaxPrice" type="number" step="0.01" class="form-control" />
+    </div>
+    <div class="col form-group">
+        <label asp-for="MinQuantity">From: </label>
         <input asp-for="MinQuantity" type="number" class="form-control" />
-        <span asp-validation-for="MinQuantity" class="text-danger"></span>
     </div>
     <div class="col form-group">
-        <label asp-for="MaxQuantity"></label>
+        <label asp-for="MaxQuantity">To: </label>
         <input asp-for="MaxQuantity" type="number" class="form-control" />
-        <span asp-validation-for="MaxQuantity" class="text-danger"></span>
     </div>
 </div>

@@ -3,7 +3,7 @@
 $(document).ready(function () {
     loadTable();
 });
-
+const delay = ms => new Promise(res => setTimeout(res, ms));
 function loadTable() {
     let data = {};
     if (filter != null) {
@@ -21,6 +21,7 @@ function loadTable() {
                 dataTable = $("#tblData").DataTable({
                     "bDestroy": true,
                     "searching": false,
+                    'processing': true,
                     data: data.data,
                     "columns": [
                         { "data": "id", "width": "10%" },
@@ -47,9 +48,19 @@ function loadTable() {
                     `;
                             },
                             "width": "20%"
+                        },
+                        {
+                            "data": "id", "render": function (data) {
+                                return `
+                                    <div class="form-check">
+                                      <input class="checkbox-product form-check-input" type="checkbox" value="${data}">
+                                    </div>
+                                `
+                            }
                         }
                     ],
                 });
+                dataTable.searching = true;
                 console.log(JSON.stringify(data.data))
             }
             else {

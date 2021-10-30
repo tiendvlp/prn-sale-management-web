@@ -29,6 +29,7 @@
     <None Remove="Areas\Admin\ViewModels\Member\" />
     <None Remove="Areas\Admin\ViewModels\Member %28copy%29\" />
     <None Remove="Areas\Admin\ViewModels\Order\" />
+    <None Remove="Areas\Admin\Views\Orders\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
@@ -58,6 +59,7 @@
     <Folder Include="Areas\Admin\ViewModels\Product\" />
     <Folder Include="wwwroot\js\product\" />
     <Folder Include="Areas\Admin\ViewModels\Order\" />
+    <Folder Include="Areas\Admin\Views\Orders\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessObject\BusinessObject.csproj">

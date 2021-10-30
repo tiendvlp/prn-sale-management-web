@@ -17,8 +17,13 @@ namespace Estore.Areas.Admin.Controllers
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
+        public class CreateOrderRequestParam
+        {
+            public List<String> ProductIds { get; set; }
+        }
+
         [HttpGet]
-        public IActionResult Index(IEnumerable<string> productIds)
+        public IActionResult Create(List<String> productIds)
         {
             using (var work = _unitOfWorkFactory.UnitOfWork)
             {
@@ -26,14 +31,14 @@ namespace Estore.Areas.Admin.Controllers
                 foreach (var id in productIds)
                 {
                     var product = work.ProductRepository.GetById(id);
+
                     orderDetailViewModels.Add(new OrderDetailViewModel(product.Id, product.Name, (int)product.Quantity, product.Price));
                 }
 
                 CreateOrderViewModel viewModel = new CreateOrderViewModel(orderDetailViewModels);
-                return View(viewModel);
+                return View();
             }
         }
-
 
         #region Api
         [HttpPost]
@@ -89,7 +94,6 @@ namespace Estore.Areas.Admin.Controllers
                 success = true
             });
         }
-
+        #endregion
     }
-    #endregion
 }
