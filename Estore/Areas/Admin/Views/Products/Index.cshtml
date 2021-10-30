@@ -38,9 +38,11 @@
 
     <div class="form-row">
         <div class="col form-group">
+            @Html.CheckBoxFor(m => m.Filter.IsIncludePrice)
             <label class="text-primary"><b>Price</b></label> <br />
         </div>
         <div class="col form-group">
+            @Html.CheckBoxFor(m => m.Filter.IsIncludeQuantity)
             <label class="text-primary"><b>Unit in stock</b></label> <br />
         </div>
     </div>

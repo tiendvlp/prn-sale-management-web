@@ -193,7 +193,22 @@ namespace Estore.Areas.Admin.Controllers
                 }
                 else
                 {
-                    queryResult = work.ProductRepository.GetWIthFilter(model.ProductId, model.ProductName, model.MaxQuantity, model.MinQuantity, model.MaxPrice, model.MinPrice);
+                    var minPrice = model.MinPrice;
+                    var maxPrice = model.MaxPrice;
+                    var maxQuantity = model.MaxQuantity;
+                    var minQuantity = model.MinQuantity;
+
+                    if (!model.IsIncludePrice)
+                    {
+                        minPrice = -1;
+                        maxPrice = -1;
+                    }
+                    if (!model.IsIncludeQuantity)
+                    {
+                        maxQuantity = -1;
+                        minQuantity = -1;
+                    }
+                    queryResult = work.ProductRepository.GetWIthFilter(model.ProductId, model.ProductName, maxQuantity, minQuantity, maxPrice, minPrice);
                 }
 
                 List<dynamic> results = new List<dynamic>();

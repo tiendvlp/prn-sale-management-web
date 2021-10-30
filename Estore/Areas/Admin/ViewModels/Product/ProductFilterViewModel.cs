@@ -20,9 +20,13 @@ namespace Estore.Areas.Admin.ViewModels.Product
         [Range(0, double.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
         [DefaultValue(200000)]
         public double MaxPrice { get; set; }
+        public bool IsIncludePrice { get; set; }
+        public bool IsIncludeQuantity { get; set; }
 
         public ProductFilterViewModel()
         {
+            IsIncludePrice = true;
+            IsIncludeQuantity = true;
             MinQuantity = 0;
             MaxQuantity = 2000000;
             MinPrice = 0;
