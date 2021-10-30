@@ -22,6 +22,12 @@
     <None Remove="Views\Home\" />
     <None Remove="Areas\Admin\Views\Home\" />
     <None Remove="Areas\Member\Views\Home\" />
+    <None Remove="common\" />
+    <None Remove="Areas\Admin\Views\Shared\" />
+    <None Remove="Areas\Admin\Views\Shared\EditorTemplate\" />
+    <None Remove="Areas\Admin\Views\Members %28copy%29\" />
+    <None Remove="Areas\Admin\ViewModels\Member\" />
+    <None Remove="Areas\Admin\ViewModels\Member %28copy%29\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
@@ -40,7 +46,27 @@
     <Folder Include="Areas\Member\Views\" />
     <Folder Include="Controllers\" />
     <Folder Include="Views\Login\" />
-    <Folder Include="Areas\Admin\Views\Home\" />
+    <Folder Include="Areas\Admin\Views\Members\" />
     <Folder Include="Areas\Member\Views\Home\" />
+    <Folder Include="common\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
+    <Folder Include="wwwroot\js\member\" />
+    <Folder Include="Areas\Admin\Views\Shared\EditorTemplates\" />
+    <Folder Include="Areas\Admin\Views\Products\" />
+    <Folder Include="Areas\Admin\ViewModels\Member\" />
+    <Folder Include="Areas\Admin\ViewModels\Product\" />
+    <Folder Include="wwwroot\js\product\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessObject\BusinessObject.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\js\member\" />
+    <Content Remove="wwwroot\js\member %28copy%29\" />
   </ItemGroup>
 </Project>

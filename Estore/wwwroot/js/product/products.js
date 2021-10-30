@@ -8,32 +8,33 @@ function loadTable() {
     dataTable = $("#tblData").DataTable({
         "ajax": {
             "type": "GET",
-            "url": "/Admin/Members/GetAll"
+            "url": "/Admin/Products/GetAll"
         },
         "columns": [
-            { "data": "id", "width": "5%" },
-            { "data": "email", "width": "15%" },
-            { "data": "name", "width": "15%" },
-            { "data": "city", "width": "15%" },
-            { "data": "companyName", "width": "15%" },
-            { "data": "country", "width": "15%" },
+            { "data": "id", "width": "10%" },
+            { "data": "name", "width": "20%" },
+            { "data": "categoryName", "width": "10%" },
+            { "data": "price", "width": "11%" },
+            { "data": "quantity", "width": "10%" },
+            { "data": "weight", "width": "10%" },
+            { "data": "unit", "width": "10%" },
             {
                 "data": "id",
                 "render": function (data) {
-                    console.log("Delete user with id: " + data)
+                    console.log("Delete product with id: " + data)
                     return `
                         <div class="text-center">
-                            <a href="/Admin/Members/Update/${data}" class="btn btn-success" style="cursor:pointer;">
+                            <a href="/Admin/Products/Update/${data}" class="btn btn-success" style="cursor:pointer;">
                                 Update
                             </a>
 
-                            <a onclick=Delete("/Admin/Members/Delete/${data}") class="btn btn-danger" style="cursor:pointer;">
+                            <a onclick=Delete("/Admin/Products/Delete/${data}") class="btn btn-danger" style="cursor:pointer;">
                                 Delete
                             </a>
                         </div>
                     `;
                 },
-                "width": "25%"
+                "width": "20%"
             }
         ],
     });

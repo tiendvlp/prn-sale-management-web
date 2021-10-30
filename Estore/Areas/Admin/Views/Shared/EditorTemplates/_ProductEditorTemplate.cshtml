@@ -1,28 +1,96 @@
-﻿@model MemberViewModel
+﻿@model ProductViewModel
+@inject IJsonHelper Json;
 
+@{
+    List<String> WeightUnits = ViewData["WeightUnits"] as List<String>;
+    List<CategoryViewModel> Categories = ViewData["ProductCategories"] as List<CategoryViewModel>;
+}
 <div class="form-group">
-    <label asp-for="Email"></label>
-    <input asp-for="Email" class="form-control" />
-    <span asp-validation-for="Email" class="text-danger"></span>
-</div>
-<div class="form-group">
+
     <label asp-for="Name"></label>
     <input asp-for="Name" class="form-control" />
     <span asp-validation-for="Name" class="text-danger"></span>
 </div>
 <div class="form-group">
-    <label asp-for="CompanyName"></label>
-    <input asp-for="CompanyName" class="form-control" />
-    <span asp-validation-for="CompanyName" class="text-danger"></span>
+    <label class="text-center" asp-for="Category.Title">Category: </label>
+    <div class="btn-group">
+        <input id="selected-category" type="button" class="btn btn-warning" asp-for="Category.Title" />
+        <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <div class="dropdown-menu">
+            @for (int i = 0; i < Categories.Count; i++)
+            {
+                CategoryViewModel category = Categories[i];
+                <a class="dropdown-item" onclick="onCategorySelected(@i)">
+                    @category.Title
+                </a>
+            }
+
+        </div>
+        <span asp-validation-for="Category.Title" class="text-danger"></span>
+    </div>
 </div>
 <div class="form-group">
-    <label asp-for="City"></label>
-    <input asp-for="City" class="form-control" />
-    <span asp-validation-for="City" class="text-danger"></span>
+    <label asp-for="Price"></label>
+    <input asp-for="Price" type="number" class="form-control" />
+    <span asp-validation-for="Price" class="text-danger"></span>
 </div>
 <div class="form-group">
-    <label asp-for="Country"></label>
-    <input asp-for="Country" class="form-control" />
-    <span asp-validation-for="Country" class="text-danger"></span>
+    <label asp-for="Weight"></label>
+    <input asp-for="Weight" type="number" class="form-control" />
+    <span asp-validation-for="Weight" class="text-danger"></span>
 </div>
+<div class="form-group">
+    <label asp-for="Unit">Weight unit: </label>
+    <div class="btn-group">
+        <input id="selected-unit" type="button" class="btn btn-warning" asp-for="Unit" />
+        <button type="button" class="btn btn-warning dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <div class="dropdown-menu">
+            @for (int i = 0; i < WeightUnits.Count; i++)
+            {
+                string weightUnit = WeightUnits[i];
+                <a class="dropdown-item" onclick="onWeightUnitSelected(@i)">
+                    @weightUnit
+                </a>
+            }
+        </div>
+    </div>
+    <span asp-validation-for="Unit" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Quantity"></label>
+    <input asp-for="Quantity" type="number" class="form-control" />
+    <span asp-validation-for="Quantity" class="text-danger"></span>
+</div>
+<div class="form-group">
+    @*Post value for View Model*@
+    <input id="viewmodel-unit-value" type="hidden" asp-for="Unit" />
+    <input id="viewmodel-category-title" type="hidden" asp-for="Category.Title" />
+    <input id="viewmodel-category-id" type="hidden" asp-for="Category.Id" />
+</div>
+
+<script>
+        // Convert Dotnet Viewmodel into Javascript model
+        let weightUnits = @Html.Raw(Json.Serialize(WeightUnits));
+        let categories = @Html.Raw(Json.Serialize(Categories));
+</script>
+
+<script>function onWeightUnitSelected(index) {
+        var selectedWeightUnit = weightUnits[index]
+        document.getElementById("viewmodel-unit-value").value = selectedWeightUnit
+        document.getElementById('selected-unit').value = selectedWeightUnit
+    }</script>
+<script>function onCategorySelected(index) {
+        console.log(JSON.stringify(categories));
+        var selectedCategory = categories[index];
+        console.log("On Category selected: " + selectedCategory.title);
+        document.getElementById("viewmodel-category-title").value = selectedCategory.title;
+        document.getElementById("viewmodel-category-id").value = selectedCategory.id;
+        document.getElementById("selected-category").value = selectedCategory.title;
+    }</script>
+
+
 

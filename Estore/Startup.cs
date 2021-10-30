@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataAccess.UnitOfWork;
+using Desktop.common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,9 +24,12 @@ namespace Estore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddSingleton
+                   (Configuration.Get<AppSetting>());
+            services.AddSingleton<IUnitOfWorkFactory>();
             services.AddRazorPages();
             services.AddRouting();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +44,7 @@ namespace Estore
                 app.UseExceptionHandler("/Home/Error");
             }
 
+
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -47,9 +53,11 @@ namespace Estore
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                    name: "default",
-                   pattern: "{area=Member}/{controller=Home}/{action=Index}/{id?}");
+                   pattern: "{controller=Login}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

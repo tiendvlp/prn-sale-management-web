@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Estore.Areas.Admin.ViewModels
+namespace Estore.Areas.Admin.ViewModels.Member
 {
     public class UpdateMemberViewModel
     {

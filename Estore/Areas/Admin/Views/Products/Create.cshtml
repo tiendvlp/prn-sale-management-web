@@ -1,6 +1,8 @@
-﻿@model CreateMemberViewModel
+﻿@model CreateProductViewModel
 @{
-    ViewBag.Title = "Create Member";
+    ViewBag.Title = "Create Product";
+    ViewData["ProductCategories"] = Model.Categories;
+    ViewData["WeightUnits"] = Model.WeightUnits;
 }
 <!DOCTYPE html>
 <html>
@@ -15,20 +17,14 @@
         <div class="col-md-6">
             <section>
                 <section>
-                    @using (Html.BeginForm("Create", "Members", FormMethod.Post))
+                    @using (Html.BeginForm("Create", "Products", FormMethod.Post))
                     {
-                        @Html.EditorFor(expression: (x => x.Member), templateName: "_MemberEditorTemplate")
-                        <div style="height:40px">
-                            @if (Model != null && Model.ErrorMessage != null)
-                            {
-                                <span class="text-danger"> @Model.ErrorMessage </span>
-                            }
-                        </div>
-
+                        @Html.EditorFor(expression: (x => x.Product), templateName: "_ProductEditorTemplate")
                         <div class="offset-md-5 form-group">
                             <button type="submit" class="btn btn-primary">Create</button>
                         </div>
                     }
+
                 </section>
 
             </section>

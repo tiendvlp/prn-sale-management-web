@@ -1,6 +1,6 @@
-﻿@model UpdateMemberViewModel
+﻿@model CreateMemberViewModel
 @{
-    ViewBag.Title = "Update Member";
+    ViewBag.Title = "Create Member";
 }
 <!DOCTYPE html>
 <html>
@@ -10,18 +10,32 @@
 </head>
 <body>
     <h1>@ViewBag.Title</h1>
+    <div class="col-md-12" style="height:60px"></div>
     <div class="row offset-md-3">
-        <div class="col-md-12" style="height: 200px"></div>
         <div class="col-md-6">
             <section>
-                <form id="member-update" method="post">
-                    @await Html.PartialAsync("_MemberInfoPartial", Model.Member)
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </div>
-                </form>
+                <section>
+                    @using (Html.BeginForm("Create", "Members", FormMethod.Post))
+                    {
+                        @Html.EditorFor(expression: (x => x.Member), templateName: "_MemberEditorTemplate")
+                        <div style="height:40px">
+                            @if (Model != null && Model.ErrorMessage != null)
+                            {
+                                <span class="text-danger"> @Model.ErrorMessage </span>
+                            }
+                        </div>
+
+                        <div class="offset-md-5 form-group">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    }
+                </section>
+
             </section>
         </div>
     </div>
 </body>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 </html>

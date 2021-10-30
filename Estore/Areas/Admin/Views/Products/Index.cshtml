@@ -5,10 +5,10 @@
 <br />
 <div class="row">
     <div class="col-6">
-        <h2 class="text-primary">Members</h2>
+        <h2 class="text-primary">Products</h2>
     </div>
     <div class="col-6 text-right ">
-        <a asp-area="Admin" asp-controller="Members" asp-action="Create" class="btn btn-primary text-white">Create New Member</a>
+        <a asp-area="Admin" asp-controller="Products" asp-action="Create" class="btn btn-primary text-white">Create New Product</a>
     </div>
 </div>
 
@@ -18,17 +18,18 @@
         <thead class="thead-dark">
             <tr class="table-info">
                 <th>Id</th>
-                <th>Email</th>
                 <th>Name</th>
-                <th>City</th>
-                <th>Company</th>
-                <th>Country</th>
-                <th><a asp-area="Admin" asp-controller="Member"></a></th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Weight</th>
+                <th>Unit</th>
+                <th><a asp-area="Admin" asp-controller="Product"></a></th>
             </tr>
         </thead>
     </table>
 </div>
 
 @section Scripts{
-    <script src="~/js/member/members.js"></script>
+    <script src="~/js/product/products.js"></script>
 }

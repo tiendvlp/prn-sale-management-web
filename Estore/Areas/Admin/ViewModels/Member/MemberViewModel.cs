@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Estore.Areas.Admin.ViewModels
+namespace Estore.Areas.Admin.ViewModels.Member
 {
     public class MemberViewModel
     {
