@@ -3,7 +3,8 @@
 
 <div class="form-row">
     <div class="col form-group">
-        <label asp-for="MemberEmail"></label>
+
+        <label class="label label-default" asp-for="MemberEmail"></label>
         <input asp-for="MemberEmail" class="form-control" />
         <span asp-validation-for="MemberEmail" class="text-danger"></span>
     </div>
@@ -17,20 +18,19 @@
 </div>
 <div class="form-row">
     <div class="col form-group">
-        <label asp-for="OrderDate"></label>
-        @Html.TextBoxFor((m => m.OrderDate), "{0:dd/MM/yyyy}")
-        <span asp-validation-for="OrderDate" class="text-danger"></span>
+        <label asp-for="OrderDate"></label> <br />
+        @Html.EditorFor((m => m.OrderDate), "dd/MM/yyyy")
     </div>
+</div>
+<div class="form-row">
     <div class="col form-group">
-        <label asp-for="ShippedDate"></label>
-        @Html.TextBoxFor(m => m.ShippedDate, "{0:dd/MM/yyyy}")
-        <span asp-validation-for="ShippedDate" class="text-danger"></span>
+        <label asp-for="ShippedDate"></label><br />
+        @Html.EditorFor((m => m.ShippedDate), "dd/MM/yyyy")
     </div>
+</div>
+<div class="form-row">
     <div class="col form-group">
-        <label asp-for="RequiredDate"></label>
-        @Html.TextBoxFor(m => m.RequiredDate, "{0:dd/MM/yyyy}")
-        <span asp-validation-for="RequiredDate" class="text-danger"></span>
-    </div>
-    <div class="col form-group">
+        <label asp-for="RequiredDate"></label><br />
+        @Html.EditorFor((m => m.RequiredDate), "dd/MM/yyyy")
     </div>
 </div>

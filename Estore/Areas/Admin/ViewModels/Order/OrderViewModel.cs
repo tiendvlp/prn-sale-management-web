@@ -7,13 +7,17 @@ namespace Estore.Areas.Admin.ViewModels.Order
     {
         [Required]
         public String MemberEmail { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Your OrderDate can not be empty")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime OrderDate { get; set; }
-        [Required]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [Required(ErrorMessage = "Your required date can not be empty")]
         public DateTime RequiredDate { get; set; }
-        [Required]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [Required(ErrorMessage = "Your shipped date can not be empty")]
         public DateTime ShippedDate { get; set; }
         [Required]
+        [Range(0, double.MaxValue, ErrorMessage = "Your freight is invalid")]
         public Double Freight { get; set; }
 
 

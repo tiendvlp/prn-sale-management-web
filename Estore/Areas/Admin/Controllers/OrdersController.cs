@@ -59,6 +59,11 @@ namespace Estore.Areas.Admin.Controllers
                 var member = work.MemberRepository.GetByEmail(createOrderViewModel.Order.MemberEmail);
                 var orderViewModel = createOrderViewModel.Order;
 
+                Console.WriteLine("OrderDate: " + createOrderViewModel.Order.OrderDate.ToString("dd:MM:yyyy"));
+                Console.WriteLine("ShippedDate: " + createOrderViewModel.Order.ShippedDate.ToString("dd:MM:yyyy"));
+                Console.WriteLine("RequiredDate: " + createOrderViewModel.Order.RequiredDate.ToString("dd:MM:yyyy"));
+
+
                 if (member == null)
                 {
                     createOrderViewModel.ErrorMessage = "Your Member email does not exist";
@@ -67,13 +72,13 @@ namespace Estore.Areas.Admin.Controllers
 
                 if (orderViewModel.OrderDate > orderViewModel.RequiredDate)
                 {
-                    createOrderViewModel.ErrorMessage = "Your required date have to be greater than order date";
+                    createOrderViewModel.ErrorMessage = "Your required date can not go order date";
                     return View(createOrderViewModel);
                 }
 
                 if (orderViewModel.OrderDate > orderViewModel.ShippedDate)
                 {
-                    createOrderViewModel.ErrorMessage = "Your shipped date have to be greater than order date";
+                    createOrderViewModel.ErrorMessage = "Your shipped date can not go before order date";
                     return View(createOrderViewModel);
                 }
 
@@ -88,13 +93,24 @@ namespace Estore.Areas.Admin.Controllers
                                                                              orderViewModel.RequiredDate,
                                                                              orderViewModel.ShippedDate,
                                                                              orderViewModel.Freight);
+                int numberOfAddedOrderDetails = 0;
                 foreach (var detailViewModel in createOrderViewModel.OrderDetails)
                 {
+                    if (detailViewModel.Quantity == 0)
+                    {
+                        continue;
+                    }
+                    numberOfAddedOrderDetails++;
                     work.OrderDetailRepository.Add(createdOrder.Id, detailViewModel.ProductId, detailViewModel.ProductPrice, detailViewModel.Quantity, 1);
                 }
 
-                work.Save();
+                if (numberOfAddedOrderDetails == 0)
+                {
+                    createOrderViewModel.AllProductsQuantitySetToNone = true;
+                    return View(createOrderViewModel);
+                }
 
+                work.Save();
                 createOrderViewModel.IsSuccess = true;
                 return View(createOrderViewModel);
             }
