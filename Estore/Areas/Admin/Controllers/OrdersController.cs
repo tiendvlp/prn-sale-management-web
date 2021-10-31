@@ -4,6 +4,7 @@ using System.Linq;
 using DataAccess.UnitOfWork;
 using Estore.Areas.Admin.ViewModels.Order;
 using Estore.Areas.Admin.ViewModels.Product;
+using Estore.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estore.Areas.Admin.Controllers

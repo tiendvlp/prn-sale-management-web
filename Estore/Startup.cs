@@ -6,6 +6,7 @@ using DataAccess.UnitOfWork;
 using Desktop.common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -70,6 +71,7 @@ namespace Estore
 
             app.UseAuthorization();
 
+            app.UseHttpsRedirection();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
@@ -78,6 +80,34 @@ namespace Estore
                    name: "default",
                    pattern: "{controller=Login}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+            });
+
+            app.Run(async (context) =>
+            {
+                Console.WriteLine("CMM");
+                String role = context.Session.GetString("Role");
+
+                string requestPath = context.Request.Path.Value;
+
+                if (!requestPath.Contains("admin"))
+                {
+                    if (role == null || !role.Equals("Admin"))
+                    {
+                        context.Response.Redirect("/", true);
+                        return;
+                    }
+
+                }
+
+                if (!requestPath.Contains("member"))
+                {
+                    if (role == null || !role.Equals("Member"))
+                    {
+                        context.Response.Redirect("/", true);
+                        return;
+                    }
+                }
+
             });
         }
     }

@@ -2,27 +2,26 @@
 using Estore.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Estore.Areas.Admin.ViewModels.Member
+namespace Estore.Areas.Member.ViewModels.UserInfo
 {
-    public class UpdateMemberViewModel
+    public class UserInfoViewModel
     {
-        public string Id { get; set; }
         [BindProperty]
         public MemberViewModel Member { get; set; }
         public string ErrorMessage { get; set; }
 
-        public UpdateMemberViewModel(string id, MemberViewModel member)
+        public UserInfoViewModel(MemberViewModel member)
         {
             Member = member;
-            Id = id;
         }
 
-        public UpdateMemberViewModel(string errorMessage)
+
+        public UserInfoViewModel(string errorMessage)
         {
             ErrorMessage = errorMessage;
         }
 
-        public UpdateMemberViewModel()
+        public UserInfoViewModel()
         {
         }
     }

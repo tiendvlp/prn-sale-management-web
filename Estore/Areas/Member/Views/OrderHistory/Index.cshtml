@@ -1,0 +1,78 @@
+﻿@model OrderHistoryViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Orders History";
+}
+
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-primary">@ViewBag.Title</h2>
+    </div>
+
+</div>
+
+
+@using (Html.BeginForm("Index", "Orders", FormMethod.Get, new { id = "main-form" }))
+{
+    <div class=" border rounded">
+        <table class="table table-striped table-bordered" id="tblData" style="width:100%">
+            <thead class="thead-dark">
+                <tr class="table-info">
+                    <th>Index</th>
+                    <th>Member email</th>
+                    <th>Price</th>
+                    <th>Freight</th>
+                    <th>Order date</th>
+                    <th>Required date</th>
+                    <th>Shipped date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.ListOfOrders.Count(); i++)
+                {
+                    var orderInfo = Model.ListOfOrders[i].Info;
+                    <tr>
+                        <td>
+                            @i
+                        </td>
+                        <td>
+                            @Html.HiddenFor(m => m.ListOfOrders[i].Info.MemberEmail)
+                            @orderInfo.MemberEmail
+                        </td>
+                        <td>
+                            @Html.HiddenFor(m => m.ListOfOrders[i].OrderDetails)
+                            @{
+                                double totalPrice = 0;
+                                foreach (var detail in Model.ListOfOrders[i].OrderDetails)
+                                {
+                                    totalPrice = totalPrice + detail.ProductPrice * detail.Quantity;
+                                }
+                                totalPrice += orderInfo.Freight;
+                                totalPrice = Math.Round(totalPrice, 2);
+                            }
+                            @totalPrice$
+                        </td>
+                        <td>
+                            @Html.HiddenFor(m => m.ListOfOrders[i].Info.Freight)
+                            @orderInfo.Freight$
+                        </td>
+                        <td>
+                            @Html.HiddenFor(m => m.ListOfOrders[i].Info.OrderDate)
+                            @Html.DisplayFor((m => orderInfo.OrderDate), "{0:dd/MM/yyyy}")
+                        </td>
+                        <td>
+                            @Html.HiddenFor(m => m.ListOfOrders[i].Info.RequiredDate)
+                            @Html.DisplayFor((m => orderInfo.RequiredDate), "{0:dd/MM/yyyy}")
+                        </td>
+                        <td>
+                            @Html.HiddenFor(m => m.ListOfOrders[i].Info.ShippedDate)
+                            @Html.DisplayFor((m => orderInfo.ShippedDate), "{0:dd/MM/yyyy}")
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+

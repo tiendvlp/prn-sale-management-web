@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Estore.Models;
 
 namespace Estore.Areas.Admin.ViewModels.Order
 {

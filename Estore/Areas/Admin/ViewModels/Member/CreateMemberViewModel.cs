@@ -1,4 +1,5 @@
 ﻿using System;
+using Estore.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estore.Areas.Admin.ViewModels.Member

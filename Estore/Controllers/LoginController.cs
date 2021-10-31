@@ -42,10 +42,11 @@ namespace Estore.Controllers
                     var user = work.MemberRepository.GetByEmail(model.Input.Email);
                     if (user != null)
                     {
+                        HttpContext.Session.SetString("UserId", user.Id);
                         HttpContext.Session.SetString("Role", "Member");
                         HttpContext.Session.SetString("WelcomeString", user.Name);
                         Console.WriteLine("Login success");
-                        return RedirectToAction("Index", "Home", new { area = "Member" });
+                        return RedirectToAction("Index", "UserInfo", new { area = "Member" });
 
                     }
                     Console.WriteLine("Login Failed");

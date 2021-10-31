@@ -21,7 +21,6 @@
     <None Remove="Controllers\" />
     <None Remove="Views\Home\" />
     <None Remove="Areas\Admin\Views\Home\" />
-    <None Remove="Areas\Member\Views\Home\" />
     <None Remove="common\" />
     <None Remove="Areas\Admin\Views\Shared\" />
     <None Remove="Areas\Admin\Views\Shared\EditorTemplate\" />
@@ -30,6 +29,11 @@
     <None Remove="Areas\Admin\ViewModels\Member %28copy%29\" />
     <None Remove="Areas\Admin\ViewModels\Order\" />
     <None Remove="Areas\Admin\Views\Orders\" />
+    <None Remove="Areas\Member\Views\UserInfo\" />
+    <None Remove="Views\Shared\EditorTemplate\" />
+    <None Remove="Areas\Member\ViewModels\UserInfo\" />
+    <None Remove="Areas\Member\ViewModels\OrderHistory\" />
+    <None Remove="Areas\Member\Views\OrderHistory\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
@@ -49,7 +53,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="Views\Login\" />
     <Folder Include="Areas\Admin\Views\Members\" />
-    <Folder Include="Areas\Member\Views\Home\" />
     <Folder Include="common\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="wwwroot\js\member\" />
@@ -60,6 +63,11 @@
     <Folder Include="wwwroot\js\product\" />
     <Folder Include="Areas\Admin\ViewModels\Order\" />
     <Folder Include="Areas\Admin\Views\Orders\" />
+    <Folder Include="Areas\Member\Views\UserInfo\" />
+    <Folder Include="Views\Shared\EditorTemplates\" />
+    <Folder Include="Areas\Member\ViewModels\UserInfo\" />
+    <Folder Include="Areas\Member\ViewModels\OrderHistory\" />
+    <Folder Include="Areas\Member\Views\OrderHistory\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessObject\BusinessObject.csproj">

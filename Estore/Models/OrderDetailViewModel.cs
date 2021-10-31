@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Estore.Areas.Admin.ViewModels.Order
+namespace Estore.Models
 {
     public class OrderDetailViewModel
     {

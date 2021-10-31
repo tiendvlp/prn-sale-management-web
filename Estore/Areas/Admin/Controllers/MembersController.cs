@@ -1,6 +1,7 @@
 ﻿using System;
 using DataAccess.UnitOfWork;
 using Estore.Areas.Admin.ViewModels.Member;
+using Estore.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Estore.Areas.Admin.Controllers
