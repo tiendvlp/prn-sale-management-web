@@ -24,6 +24,74 @@ namespace Estore.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        public IActionResult Index(ManageOrderViewModel model)
+        {
+            using (var work = _unitOfWorkFactory.UnitOfWork)
+            {
+                model.errorMessage = "";
+
+                List<OrderItemViewModel> orderItemViewModels = new List<OrderItemViewModel>();
+                (List<OrderItemViewModel> orders, List<String> Ids, double totalEarn, long totalOrders) result;
+                if (model.IsGetAll)
+                {
+                    result = _getOrderByTime(DateTime.MinValue, DateTime.MaxValue);
+                }
+                else
+                {
+                    result = _getOrderByTime(model.StartDate, model.EndDate);
+
+                    if (model.StartDate > model.EndDate)
+                    {
+                        model.errorMessage = "Your start date have to before end date";
+                        return View(model);
+                    }
+
+                }
+
+                model.OrderIds = result.Ids;
+                model.ListOfOrders = result.orders;
+                model.TotalEarn = result.totalEarn;
+                model.TotalOrders = result.totalOrders;
+
+                return View(model);
+            }
+        }
+
+        private (List<OrderItemViewModel> orders, List<String> Ids, double totalEarn, long totalOrders) _getOrderByTime(DateTime from, DateTime to)
+        {
+            List<OrderItemViewModel> orderItemViewModels = new List<OrderItemViewModel>();
+            List<String> orderIds = new List<string>();
+            double totalEarn = 0;
+            long totalOrder = 0;
+            using (var work = _unitOfWorkFactory.UnitOfWork)
+            {
+                var orders = work.OrderRepository.GetWithFilter(from, to);
+
+                orders.ForEach(order =>
+                {
+                    totalOrder++;
+                    List<OrderDetailViewModel> orderDetailViewModels = new List<OrderDetailViewModel>();
+
+                    var orderDetails = work.OrderDetailRepository.GetByOrderId(order.Id);
+
+                    orderDetails.ForEach(orderDetail =>
+                    {
+                        totalEarn += orderDetail.UnitPrice * orderDetail.Quantity;
+                        // Wrong, we can not pass product name is null, but here we don't care @@
+                        orderDetailViewModels.Add(new OrderDetailViewModel(orderDetail.ProductId, null, orderDetail.Quantity, orderDetail.UnitPrice));
+                    });
+
+                    OrderViewModel orderViewModel = new OrderViewModel(order.Member.Email, order.OrderDate, order.RequiredDate, order.ShippedDate, order.Freight);
+
+                    orderItemViewModels.Add(new OrderItemViewModel(orderDetailViewModels, orderViewModel));
+                    orderIds.Add(order.Id);
+                });
+
+                return (orderItemViewModels, orderIds, totalEarn, totalOrder);
+            }
+        }
+
+        [HttpGet]
         public IActionResult Create(List<String> productIds)
         {
             using (var work = _unitOfWorkFactory.UnitOfWork)
@@ -114,6 +182,31 @@ namespace Estore.Areas.Admin.Controllers
                 createOrderViewModel.IsSuccess = true;
                 return View(createOrderViewModel);
             }
+        }
+
+        [HttpPost]
+        public IActionResult Delete([FromBody] string id)
+        {
+            Console.WriteLine("Delete: " + id);
+            using (var work = _unitOfWorkFactory.UnitOfWork)
+            {
+                var details = work.OrderDetailRepository.GetByOrderId(id);
+                if (details == null || details.Count == 0)
+                {
+                    return Json(new
+                    {
+                        success = true,
+                        errorMessage = "There is no order with id: {" + id + "}"
+                    });
+                }
+                work.OrderDetailRepository.RemoveByOrderId(id);
+                work.OrderRepository.RemoveById(id);
+                work.Save();
+            }
+            return Json(new
+            {
+                success = true
+            });
         }
         #endregion
     }
