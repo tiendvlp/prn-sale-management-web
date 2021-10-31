@@ -25,9 +25,14 @@ namespace DataAccess.repositories.Orders
             return newOrder;
         }
 
+        public Order GetById(string id)
+        {
+            return _orderDao.Get(id);
+        }
+
         public List<Order> GetByMemberId(string id)
         {
-            IQueryable<Order> queryResult =  _orderDao.GetByMemberId(id);
+            IQueryable<Order> queryResult = _orderDao.GetByMemberId(id);
 
             return queryResult.ToList();
         }
@@ -58,7 +63,7 @@ namespace DataAccess.repositories.Orders
 
         public void Update(string orderId, string memberId, DateTime orderDate, DateTime requiredDate, DateTime shippedDate, double freight)
         {
-           Order target = _orderDao.Get(orderId);
+            Order target = _orderDao.Get(orderId);
             target.MemberId = memberId;
             target.OrderDate = orderDate;
             target.RequiredDate = requiredDate;

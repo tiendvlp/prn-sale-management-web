@@ -118,7 +118,107 @@ namespace Estore.Areas.Admin.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Update(string orderId)
+        {
+            using (var work = _unitOfWorkFactory.UnitOfWork)
+            {
+                List<OrderDetailViewModel> orderDetailViewModels = new List<OrderDetailViewModel>();
+
+                OrderViewModel orderViewModel;
+
+                var order = work.OrderRepository.GetById(orderId);
+
+                if (order == null)
+                {
+                    Console.WriteLine("OrderId: " + orderId);
+                    return Json(new { errorMessage = "Your order id does not exist" });
+                }
+
+                orderViewModel = new OrderViewModel(order.Member.Email, order.OrderDate, order.RequiredDate, order.ShippedDate, order.Freight);
+
+                var orderDetails = work.OrderDetailRepository.GetByOrderId(orderId);
+
+                foreach (var detail in orderDetails)
+                {
+                    orderDetailViewModels.Add(new OrderDetailViewModel(detail.ProductId, detail.Product.Name, detail.Quantity, detail.UnitPrice));
+                }
+
+                UpdateOrderViewModel viewModel = new UpdateOrderViewModel(orderDetailViewModels, orderViewModel, orderId);
+                return View(viewModel);
+            }
+        }
+
         #region Api
+
+        [HttpPost]
+        public IActionResult Update(UpdateOrderViewModel model)
+        {
+            using (var work = _unitOfWorkFactory.UnitOfWork)
+            {
+                var member = work.MemberRepository.GetByEmail(model.Order.MemberEmail);
+                var orderViewModel = model.Order;
+
+                Console.WriteLine("OrderDate: " + model.Order.OrderDate.ToString("dd:MM:yyyy"));
+                Console.WriteLine("ShippedDate: " + model.Order.ShippedDate.ToString("dd:MM:yyyy"));
+                Console.WriteLine("RequiredDate: " + model.Order.RequiredDate.ToString("dd:MM:yyyy"));
+
+
+                if (member == null)
+                {
+                    model.ErrorMessage = "Your Member email does not exist";
+                    return View(model);
+                }
+
+                if (orderViewModel.OrderDate > orderViewModel.RequiredDate)
+                {
+                    model.ErrorMessage = "Your required date can not go order date";
+                    return View(model);
+                }
+
+                if (orderViewModel.OrderDate > orderViewModel.ShippedDate)
+                {
+                    model.ErrorMessage = "Your shipped date can not go before order date";
+                    return View(model);
+                }
+
+                if (model.OrderDetails == null || model.OrderDetails.ToList().Count == 0)
+                {
+                    model.ErrorMessage = "Your order details is empty";
+                    return View(model);
+                }
+
+
+                work.OrderRepository.Update(model.OrderId, member.Id,
+                                            orderViewModel.OrderDate,
+                                            orderViewModel.RequiredDate,
+                                            orderViewModel.ShippedDate,
+                                            orderViewModel.Freight);
+
+                work.OrderDetailRepository.RemoveByOrderId(model.OrderId);
+                int numberOfAddedOrderDetails = 0;
+                foreach (var detailViewModel in model.OrderDetails)
+                {
+                    if (detailViewModel.Quantity == 0)
+                    {
+                        continue;
+                    }
+                    numberOfAddedOrderDetails++;
+                    work.OrderDetailRepository.Add(model.OrderId, detailViewModel.ProductId, detailViewModel.ProductPrice, detailViewModel.Quantity, 1);
+                }
+
+                if (numberOfAddedOrderDetails == 0)
+                {
+                    model.AllProductsQuantitySetToNone = true;
+                    return View(model);
+                }
+
+                work.Save();
+                model.IsSuccess = true;
+                return View(model);
+            }
+        }
+
         [HttpPost]
         public IActionResult Create(CreateOrderViewModel createOrderViewModel)
         {
