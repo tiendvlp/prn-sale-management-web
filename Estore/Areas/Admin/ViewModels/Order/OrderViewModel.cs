@@ -8,12 +8,12 @@ namespace Estore.Areas.Admin.ViewModels.Order
         [Required]
         public String MemberEmail { get; set; }
         [Required(ErrorMessage = "Your OrderDate can not be empty")]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime OrderDate { get; set; }
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "Your required date can not be empty")]
         public DateTime RequiredDate { get; set; }
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "Your shipped date can not be empty")]
         public DateTime ShippedDate { get; set; }
         [Required]

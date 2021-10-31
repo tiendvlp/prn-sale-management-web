@@ -38,13 +38,14 @@ namespace Estore.Areas.Admin.Controllers
                 }
                 else
                 {
-                    result = _getOrderByTime(model.StartDate, model.EndDate);
-
                     if (model.StartDate > model.EndDate)
                     {
                         model.errorMessage = "Your start date have to before end date";
                         return View(model);
                     }
+                    Console.WriteLine("Start time: " + model.StartDate.ToString("dd/MM/yyyy"));
+                    Console.WriteLine("End time: " + model.EndDate.ToString("dd/MM/yyyy"));
+                    result = _getOrderByTime(model.StartDate, model.EndDate);
 
                 }
 
@@ -77,8 +78,7 @@ namespace Estore.Areas.Admin.Controllers
                     orderDetails.ForEach(orderDetail =>
                     {
                         totalEarn += orderDetail.UnitPrice * orderDetail.Quantity;
-                        // Wrong, we can not pass product name is null, but here we don't care @@
-                        orderDetailViewModels.Add(new OrderDetailViewModel(orderDetail.ProductId, null, orderDetail.Quantity, orderDetail.UnitPrice));
+                        orderDetailViewModels.Add(new OrderDetailViewModel(orderDetail.ProductId, orderDetail.Product.Name, orderDetail.Quantity, orderDetail.UnitPrice));
                     });
 
                     OrderViewModel orderViewModel = new OrderViewModel(order.Member.Email, order.OrderDate, order.RequiredDate, order.ShippedDate, order.Freight);

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -22,12 +23,28 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (Context.Session.GetString("Role") != null && Context.Session.GetString("Role").Equals("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Members" asp-action="Index">Members Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Products" asp-action="Index">Products Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Orders" asp-action="Index">Orders Management</a>
+                            </li>
+                        }
+                        else if (Context.Session.GetString("Role") != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Member" asp-controller="Members" asp-action="Index">Your Info</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Member" asp-controller="Orders" asp-action="Index">Orders History</a>
+                            </li>
+                        }
+
                     </ul>
                 </div>
             </div>

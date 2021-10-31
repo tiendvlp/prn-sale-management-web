@@ -33,11 +33,11 @@
         <div class="col-12 row">
             <div class=" form-group float-left">
                 <label asp-for="StartDate">From: </label>
-                @Html.EditorFor((m => m.StartDate), "dd/MM/yyyy")
+                @Html.EditorFor((m => m.StartDate), "MM/dd/yyyy")
             </div>
             <div class="     form-group float-left">
                 <label asp-for="EndDate">To: </label>
-                @Html.EditorFor((m => m.EndDate), "dd/MM/yyyy")
+                @Html.EditorFor((m => m.EndDate), "MM/dd/yyyy")
             </div>
         </div>
     </div>
@@ -107,15 +107,15 @@
                         </td>
                         <td>
                             @Html.HiddenFor(m => m.ListOfOrders[i].Info.OrderDate)
-                            @Html.DisplayFor((m => orderInfo.OrderDate), "dd/MM/yyyy")
+                            @Html.DisplayFor((m => orderInfo.OrderDate), "{0:dd/MM/yyyy}")
                         </td>
                         <td>
                             @Html.HiddenFor(m => m.ListOfOrders[i].Info.RequiredDate)
-                            @Html.DisplayFor((m => orderInfo.RequiredDate), "dd/MM/yyyy")
+                            @Html.DisplayFor((m => orderInfo.RequiredDate), "{0:dd/MM/yyyy}")
                         </td>
                         <td>
                             @Html.HiddenFor(m => m.ListOfOrders[i].Info.ShippedDate)
-                            @Html.DisplayFor((m => orderInfo.ShippedDate), "dd/MM/yyyy")
+                            @Html.DisplayFor((m => orderInfo.ShippedDate), "{0:dd/MM/yyyy}")
                         </td>
                         <td>
                             <div class="text-center">

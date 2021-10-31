@@ -25,6 +25,16 @@ namespace Estore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".FEstore.Session";
+                options.IdleTimeout = TimeSpan.FromSeconds(12600);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddMvc(config =>
             {
                 // Add XML Content Negotiation
@@ -52,6 +62,7 @@ namespace Estore
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseSession();
 
             app.UseStaticFiles();
 

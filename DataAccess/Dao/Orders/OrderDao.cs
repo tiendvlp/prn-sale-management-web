@@ -24,21 +24,19 @@ namespace DataAccess.Dao.Orders
         {
             IQueryable<Order> result = from order in _dbContext.Orders
                                        where
-                                       order.OrderDate.Year >= startDate.Year &&
-                                       order.OrderDate.Month >= startDate.Month &&
-                                       order.OrderDate.Day >= startDate.Day
+                                       order.OrderDate.Date >= startDate.Date
                                        &&
-                                       order.OrderDate.Year <= endDate.Year &&
-                                       order.OrderDate.Month <= endDate.Month &&
-                                       order.OrderDate.Day <= endDate.Day
+                                       order.OrderDate.Date <= endDate.Date
                                        select order;
+            Console.WriteLine("Filter order result: " + result.Count());
             return result;
         }
 
         public void RemoveByMemberId(string id)
         {
             IQueryable<Order> targets = (from order in _dbContext.Orders where order.MemberId.Equals(id) select order);
-            targets.ToList().ForEach(t => {
+            targets.ToList().ForEach(t =>
+            {
                 _dbContext.OrderDetails.RemoveRange(from orderdetail in _dbContext.OrderDetails where orderdetail.OrderId.Equals(t.Id) select orderdetail);
             });
 
