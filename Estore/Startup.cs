@@ -77,7 +77,7 @@ namespace Estore
                 String role = context.Session.GetString("Role");
 
                 string requestPath = context.Request.Path.Value;
-
+                Console.WriteLine("Request path: " + requestPath);
                 if (requestPath.ToLower().Contains("admin"))
                 {
                     if (role == null || !role.Equals("Admin"))
