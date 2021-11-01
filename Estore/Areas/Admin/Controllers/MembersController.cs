@@ -102,6 +102,12 @@ namespace Estore.Areas.Admin.Controllers
                         message = "Error while deleting"
                     });
                 }
+                var orders = work.OrderRepository.GetByMemberId(target.Id);
+                foreach (var order in orders)
+                {
+                    work.OrderDetailRepository.RemoveByOrderId(order.Id);
+                    work.OrderRepository.RemoveById(order.Id);
+                }
                 work.MemberRepository.RemoveById(target.Id);
                 work.Save();
                 return Json(new

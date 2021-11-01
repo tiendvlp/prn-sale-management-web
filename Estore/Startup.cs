@@ -66,49 +66,61 @@ namespace Estore
             app.UseSession();
 
             app.UseStaticFiles();
-
             app.UseRouting();
 
             app.UseAuthorization();
 
-            app.UseHttpsRedirection();
+
+            app.Use(async (context, next) =>
+            {
+                Console.WriteLine("Middleware checking role");
+                String role = context.Session.GetString("Role");
+
+                string requestPath = context.Request.Path.Value;
+
+                if (requestPath.ToLower().Contains("admin"))
+                {
+                    if (role == null || !role.Equals("Admin"))
+                    {
+                        context.Response.Redirect("/", true);
+                        await next();
+                        return;
+                    }
+                    else
+                    {
+                        await next();
+                        return;
+                    }
+
+                }
+
+                if (requestPath.ToLower().Contains("member"))
+                {
+                    if (role == null || !role.Equals("Member"))
+                    {
+                        context.Response.Redirect("/", true);
+                        await next();
+                        return;
+                    }
+                    else
+                    {
+                        await next();
+                        return;
+                    }
+                }
+                await next();
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapControllerRoute(
                    name: "default",
-                   pattern: "{controller=Login}/{action=Index}/{id?}");
+                   pattern: "{controller=Auth}/{action=Login}/{id?}");
                 endpoints.MapRazorPages();
             });
 
-            app.Run(async (context) =>
-            {
-                Console.WriteLine("CMM");
-                String role = context.Session.GetString("Role");
-
-                string requestPath = context.Request.Path.Value;
-
-                if (!requestPath.Contains("admin"))
-                {
-                    if (role == null || !role.Equals("Admin"))
-                    {
-                        context.Response.Redirect("/", true);
-                        return;
-                    }
-
-                }
-
-                if (!requestPath.Contains("member"))
-                {
-                    if (role == null || !role.Equals("Member"))
-                    {
-                        context.Response.Redirect("/", true);
-                        return;
-                    }
-                }
-
-            });
         }
     }
 }

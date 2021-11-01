@@ -153,7 +153,6 @@ namespace Estore.Areas.Admin.Controllers
         {
             using (var work = _unitOfWorkFactory.UnitOfWork)
             {
-                Console.WriteLine("Delete product" + id);
                 var target = work.ProductRepository.GetById(id);
                 if (target == null)
                 {
@@ -163,14 +162,23 @@ namespace Estore.Areas.Admin.Controllers
                         message = "Error while deleting"
                     });
                 }
-                work.ProductRepository.RemoveById(target.Id);
+                work.OrderDetailRepository.RemoveByProductId(id);
+                work.ProductRepository.RemoveById(id);
                 work.Save();
-                return Json(new
-                {
-                    success = true,
-                    message = "Delete product success"
-                });
             }
+
+            using (var work = _unitOfWorkFactory.UnitOfWork)
+            {
+                work.OrderRepository.RemoveOrderContainsNoOrderDetails();
+                work.Save();
+            }
+            Console.WriteLine("Delete product" + id);
+
+            return Json(new
+            {
+                success = true,
+                message = "Delete product success"
+            });
         }
 
         [HttpPost()]

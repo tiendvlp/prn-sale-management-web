@@ -51,7 +51,7 @@
     <Folder Include="Areas\Admin\ViewModels\" />
     <Folder Include="Areas\Member\Views\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Views\Login\" />
+    <Folder Include="Views\Auth\" />
     <Folder Include="Areas\Admin\Views\Members\" />
     <Folder Include="common\" />
     <Folder Include="Areas\Admin\Views\Shared\" />

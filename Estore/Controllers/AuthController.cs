@@ -9,24 +9,31 @@ using Microsoft.Extensions.Logging;
 
 namespace Estore.Controllers
 {
-    public class LoginController : Controller
+    public class AuthController : Controller
     {
         private IUnitOfWorkFactory _unitOfWorkFactory;
         private AppSetting _appSetting;
 
-        public LoginController(IUnitOfWorkFactory unitOfWorkFactory, AppSetting appSetting)
+        public AuthController(IUnitOfWorkFactory unitOfWorkFactory, AppSetting appSetting)
         {
             _appSetting = appSetting;
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public IActionResult Index()
+        public IActionResult Signout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction(nameof(Login));
+        }
+
+        [HttpGet]
+        public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Index(LoginViewModel model)
+        public IActionResult Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {

@@ -14,6 +14,7 @@ function loadTable() {
         "columns": [
             { "data": "id", "width": "5%" },
             { "data": "email", "width": "15%" },
+            { "data": "password", "width": "15%" },
             { "data": "name", "width": "15%" },
             { "data": "city", "width": "15%" },
             { "data": "companyName", "width": "15%" },
@@ -24,11 +25,12 @@ function loadTable() {
                     console.log("Delete user with id: " + data)
                     return `
                         <div class="text-center">
-                            <a href="/Admin/Members/Update/${data}" class="btn btn-success" style="cursor:pointer;">
+                            <a href="/Admin/Members/Update/${data}" style="width:100px" class="btn btn-success" style="cursor:pointer;">
                                 Update
                             </a>
-
-                            <a onclick=Delete("/Admin/Members/Delete/${data}") class="btn btn-danger" style="cursor:pointer;">
+                            <br/>
+                            
+                            <a onclick=Delete("/Admin/Members/Delete/${data}") style="width:100px"  class="mt-2 btn btn-danger" style="cursor:pointer;">
                                 Delete
                             </a>
                         </div>
